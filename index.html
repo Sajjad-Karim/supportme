@@ -457,14 +457,38 @@
           border-radius: 16px;
         }
 
+        .modal h3 {
+          font-size: 1.02rem;
+        }
+
+        .modal p {
+          font-size: 0.84rem;
+        }
+
         .row {
-          grid-template-columns: 1fr;
-          align-items: stretch;
-          gap: 10px;
+          grid-template-columns: minmax(0, 1fr) auto;
+          align-items: center;
+          gap: 8px;
+          padding: 12px;
+        }
+
+        .label {
+          font-size: 0.68rem;
+        }
+
+        .value {
+          font-size: 0.86rem;
         }
 
         .copy {
           justify-self: end;
+          align-self: center;
+          font-size: 0.68rem;
+          padding: 6px 8px;
+        }
+
+        .mobile-hide {
+          display: none;
         }
       }
 
@@ -588,7 +612,7 @@
               Copy
             </button>
           </div>
-          <div class="row">
+          <div class="row mobile-hide">
             <div>
               <span class="label">Transfer Type</span>
               <span class="value" id="transferType">Local transfer</span>
@@ -618,7 +642,7 @@
               Copy
             </button>
           </div>
-          <div class="row">
+          <div class="row mobile-hide">
             <div>
               <span class="label">Routing (ABA)</span>
               <span class="value" id="routingAba">031100209</span>
@@ -660,7 +684,7 @@
               Copy
             </button>
           </div>
-          <div class="row">
+          <div class="row mobile-hide">
             <div>
               <span class="label">Account Type</span>
               <span class="value" id="accountType">CHECKING</span>

@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="International Alerts — professional independent global updates, simplified and fast."
+    />
+    <title>International Alerts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ========== Reset + Tokens ========== */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0d2437;
+        --bg-2: #123049;
+        --bg-3: #163a57;
+        --text: #ffffff;
+        --text-soft: rgba(255, 255, 255, 0.8);
+        --text-faint: rgba(255, 255, 255, 0.6);
+        --line: rgba(255, 255, 255, 0.16);
+        --radius-xl: 22px;
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --max-width: 1100px;
+        --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.35);
+        --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.22);
+        --focus-ring: 0 0 0 3px rgba(125, 211, 252, 0.45);
+        --cta: linear-gradient(140deg, #22c55e 0%, #06b6d4 55%, #3b82f6 100%);
+        --container-pad: clamp(16px, 3vw, 28px);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Manrope",
+          Inter,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        color: var(--text);
+        min-height: 100vh;
+        background:
+          radial-gradient(
+            1000px 520px at 85% -15%,
+            rgba(6, 182, 212, 0.24),
+            transparent 60%
+          ),
+          radial-gradient(
+            1200px 500px at -10% 110%,
+            rgba(59, 130, 246, 0.22),
+            transparent 60%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0)
+          ),
+          var(--bg);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body.modal-open {
+        overflow: hidden;
+      }
+
+      .bg-image {
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(13, 36, 55, 0.83), rgba(13, 36, 55, 0.86)),
+          url("https://images.unsplash.com/photo-1446776877081-d282a0f896e2?auto=format&fit=crop&w=1800&q=80");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.35;
+        z-index: -1;
+      }
+
+      .page {
+        width: min(100%, var(--max-width));
+        margin: 0 auto;
+        padding: 16px var(--container-pad) 42px;
+      }
+
+      /* ========== Top Navigation ========== */
+      .nav {
+        position: sticky;
+        top: 10px;
+        z-index: 40;
+        padding: 10px 14px;
+        margin-bottom: 26px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .brand-text {
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .nav-note {
+        font-size: 0.76rem;
+        color: var(--text-faint);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      /* ========== Single Hero ========== */
+      .hero {
+        border: 1px solid var(--line);
+        border-radius: var(--radius-xl);
+        padding: 24px 18px;
+        background: linear-gradient(
+          160deg,
+          rgba(255, 255, 255, 0.11),
+          rgba(255, 255, 255, 0.04) 55%,
+          rgba(255, 255, 255, 0.02)
+        );
+        box-shadow: var(--shadow-card);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        padding: 6px 12px;
+        color: #dbeafe;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 8vw, 3.9rem);
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-bottom: 10px;
+        font-weight: 800;
+      }
+
+      .hero-sub {
+        color: var(--text-soft);
+        font-size: clamp(0.97rem, 2.9vw, 1.2rem);
+        max-width: 700px;
+        margin: 0 auto 18px;
+        font-weight: 500;
+      }
+
+      .hero-desc {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.07);
+        padding: 14px;
+        color: #eef6ff;
+        font-size: 0.94rem;
+        margin: 0 auto 20px;
+        max-width: 760px;
+        text-align: left;
+      }
+      .hero-desc p + p {
+        margin-top: 8px;
+      }
+
+      .cta-btn {
+        display: block;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 24px;
+        background: var(--cta);
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        font-size: 0.97rem;
+        cursor: pointer;
+        box-shadow: 0 10px 28px rgba(6, 182, 212, 0.36);
+        transition:
+          transform 0.24s ease,
+          filter 0.24s ease,
+          box-shadow 0.24s ease;
+        margin: 18px auto 20px;
+      }
+      .cta-btn:hover {
+        transform: scale(1.05);
+        filter: brightness(1.05);
+        box-shadow:
+          0 14px 34px rgba(59, 130, 246, 0.48),
+          0 0 34px rgba(34, 197, 94, 0.34);
+      }
+      .cta-btn:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      .hero p {
+        color: var(--text-soft);
+        font-size: 0.94rem;
+        margin-bottom: 11px;
+      }
+
+      .hero p:last-child {
+        margin-bottom: 0;
+      }
+
+      .hero-copy {
+        margin-bottom: 18px;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 24px;
+        color: var(--text-faint);
+        font-size: 0.8rem;
+      }
+
+      /* ========== Modal ========== */
+      .modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: rgba(6, 14, 23, 0.68);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition:
+          opacity 0.28s ease,
+          visibility 0.28s ease;
+      }
+
+      .modal.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-card {
+        width: min(100%, 720px);
+        max-width: 100%;
+        max-height: calc(100vh - 32px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.13);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: var(--shadow-card);
+        padding: 18px;
+        position: relative;
+        transform: scale(0.93) translateY(12px);
+        opacity: 0;
+        transition:
+          transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.32s ease;
+      }
+
+      .modal.is-open .modal-card {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 38px;
+        height: 38px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition:
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .close:hover {
+        transform: rotate(90deg);
+        background: rgba(255, 255, 255, 0.24);
+      }
+
+      .close:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      .modal h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+        padding-right: 34px;
+        letter-spacing: -0.015em;
+      }
+
+      .modal p {
+        color: var(--text-soft);
+        margin-bottom: 12px;
+        font-size: 0.92rem;
+      }
+
+      .transfer-route {
+        font-size: 0.8rem;
+        color: #6b7280;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 10px;
+      }
+
+      .pay-box {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        align-items: center;
+        padding: 14px;
+        border: 1px solid #d8dee8;
+        border-radius: 14px;
+        background: #eef2f6;
+      }
+
+      .label {
+        display: block;
+        font-size: 0.74rem;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .value {
+        display: block;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: #1f2937;
+        word-break: break-word;
+        margin-top: 2px;
+      }
+
+      .copy {
+        border: 1px solid #cfd8e3;
+        border-radius: 10px;
+        background: #f8fafc;
+        color: #374151;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 8px 12px;
+        transition:
+          background 0.2s ease,
+          transform 0.15s ease;
+        white-space: nowrap;
+      }
+
+      .copy:hover {
+        background: #eef2ff;
+      }
+
+      .copy:active {
+        transform: scale(0.96);
+      }
+
+      .copy:focus-visible {
+        outline: none;
+        box-shadow: var(--focus-ring);
+      }
+
+      .copy.done {
+        background: #dcfce7;
+        border-color: #86efac;
+        color: #166534;
+      }
+
+      @media (min-width: 760px) {
+        .pay-box {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .row.full {
+          grid-column: 1 / -1;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .modal {
+          padding: 12px;
+          align-items: center;
+        }
+
+        .modal-card {
+          width: 100%;
+          max-width: 100%;
+          max-height: calc(100vh - 24px);
+          padding: 16px 14px;
+          border-radius: 16px;
+        }
+
+        .row {
+          grid-template-columns: 1fr;
+          align-items: stretch;
+          gap: 10px;
+        }
+
+        .copy {
+          justify-self: end;
+        }
+      }
+
+      @media (min-width: 780px) {
+        .hero {
+          padding: 34px 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-image" aria-hidden="true"></div>
+
+    <main class="page">
+      <!-- ========== Navigation ========== -->
+      <nav class="nav" aria-label="Primary">
+        <div class="brand-wrap">
+          <img class="logo" src="logo.jpeg" alt="International Alerts logo" />
+          <span class="brand-text">International Alerts</span>
+        </div>
+        <span class="nav-note">Independent Global News</span>
+      </nav>
+
+      <!-- ========== Single Hero Section ========== -->
+      <section class="hero">
+        <article>
+          <span class="hero-badge">Trusted • Fast • Simple</span>
+          <h1>International Alerts</h1>
+          <p class="hero-sub">
+            A simple independent news page sharing important global updates in a
+            fast and easy way.
+          </p>
+          <button
+            id="openModal"
+            class="cta-btn"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="supportModal"
+          >
+            Support Me
+          </button>
+          <div class="hero-desc hero-copy">
+            <p>Hi everyone 👋</p>
+            <p>
+              I collect and share trending international news so you don’t need
+              to scroll multiple platforms or watch long news channels.
+              Everything is simplified and delivered fast for your convenience.
+            </p>
+            <p>
+              This page is a single-person independent project created to share
+              important and trending international news in a quick and simple
+              format.
+            </p>
+            <p>
+              Many people don’t have time to follow full news channels, so this
+              page helps summarize and share key global updates.
+            </p>
+            <p>
+              This page is not monetized. There is no income generated from it.
+              It is purely made to help people stay informed.
+            </p>
+            <p>Thank you for your support ❤️</p>
+            <p>
+              <strong>Mission:</strong> Help people stay informed without
+              spending hours on multiple platforms.
+            </p>
+            <p>
+              <strong>Approach:</strong> Highlight only important global
+              headlines in a clear and direct format.
+            </p>
+            <p>
+              <strong>Community:</strong> Your support keeps this independent
+              public update page running.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <p class="footer">
+        &copy; International Alerts • Independent Global News
+      </p>
+    </main>
+
+    <!-- ========== Support Modal ========== -->
+    <div
+      class="modal"
+      id="supportModal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="supportTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-card" role="document">
+        <button
+          class="close"
+          id="closeModal"
+          type="button"
+          aria-label="Close modal"
+        >
+          ✕
+        </button>
+        <h3 id="supportTitle">❤️ Support International Alerts</h3>
+        <p>
+          If you like my work and want to support, you can contribute via
+          Payoneer using the details below.
+        </p>
+
+        <p class="transfer-route">Supported Transfer Routes: Local</p>
+        <div class="pay-box">
+          <div class="row">
+            <div>
+              <span class="label">Bank Name</span>
+              <span class="value" id="bankName">Citibank</span>
+            </div>
+            <button
+              class="copy"
+              data-target="bankName"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row">
+            <div>
+              <span class="label">Transfer Type</span>
+              <span class="value" id="transferType">Local transfer</span>
+            </div>
+            <button
+              class="copy"
+              data-target="transferType"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row full">
+            <div>
+              <span class="label">Bank Address</span>
+              <span class="value" id="bankAddress"
+                >111 Wall Street New York, NY 10043 USA</span
+              >
+            </div>
+            <button
+              class="copy"
+              data-target="bankAddress"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row">
+            <div>
+              <span class="label">Routing (ABA)</span>
+              <span class="value" id="routingAba">031100209</span>
+            </div>
+            <button
+              class="copy"
+              data-target="routingAba"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row">
+            <div>
+              <span class="label">SWIFT Code</span>
+              <span class="value" id="swiftCode">CITIUS33</span>
+            </div>
+            <button
+              class="copy"
+              data-target="swiftCode"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row">
+            <div>
+              <span class="label">Account Number</span>
+              <span class="value" id="accountNumber">70585530002272593</span>
+            </div>
+            <button
+              class="copy"
+              data-target="accountNumber"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row">
+            <div>
+              <span class="label">Account Type</span>
+              <span class="value" id="accountType">CHECKING</span>
+            </div>
+            <button
+              class="copy"
+              data-target="accountType"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+          <div class="row full">
+            <div>
+              <span class="label">Beneficiary Name</span>
+              <span class="value" id="beneficiaryName">Sajjad Karim</span>
+            </div>
+            <button
+              class="copy"
+              data-target="beneficiaryName"
+              data-label="Copy"
+              type="button"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+
+        <p>Even a small contribution helps me continue sharing updates.</p>
+      </div>
+    </div>
+
+    <script>
+      /* ========== Modal + Copy interactions ========== */
+      (function () {
+        var modal = document.getElementById("supportModal");
+        var openBtn = document.getElementById("openModal");
+        var closeBtn = document.getElementById("closeModal");
+        var copyButtons = document.querySelectorAll(".copy");
+
+        function openModal() {
+          modal.classList.add("is-open");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.classList.add("modal-open");
+          closeBtn.focus();
+        }
+
+        function closeModal() {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.classList.remove("modal-open");
+          openBtn.focus();
+        }
+
+        function fallbackCopy(text) {
+          var area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "fixed";
+          area.style.left = "-9999px";
+          document.body.appendChild(area);
+          area.select();
+          var ok = false;
+          try {
+            ok = document.execCommand("copy");
+          } catch (e) {
+            ok = false;
+          }
+          document.body.removeChild(area);
+          return ok;
+        }
+
+        function setCopyState(button, success) {
+          var base = button.getAttribute("data-label") || "Copy";
+          if (success) {
+            button.textContent = "Copied!";
+            button.classList.add("done");
+          } else {
+            button.textContent = "Failed";
+          }
+          clearTimeout(button._timer);
+          button._timer = setTimeout(function () {
+            button.textContent = base;
+            button.classList.remove("done");
+          }, 1700);
+        }
+
+        function copyText(text, button) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard
+              .writeText(text)
+              .then(function () {
+                setCopyState(button, true);
+              })
+              .catch(function () {
+                setCopyState(button, fallbackCopy(text));
+              });
+          } else {
+            setCopyState(button, fallbackCopy(text));
+          }
+        }
+
+        openBtn.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", function (event) {
+          if (event.target === modal) closeModal();
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && modal.classList.contains("is-open")) {
+            closeModal();
+          }
+        });
+
+        copyButtons.forEach(function (button) {
+          button.addEventListener("click", function () {
+            var targetId = button.getAttribute("data-target");
+            var target = document.getElementById(targetId);
+            if (!target) return;
+            copyText(target.textContent.trim(), button);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
